@@ -25,7 +25,7 @@ sgdisk ${DISK} --new=3:0:+${SWAP_SIZE} --typecode=3:8200 --change-name=3:Swap_Sp
 sgdisk ${DISK} --new=4:0: --typecode=4:8300 --change-name=4:Home_Directory
 
 # Synchronize kernel partition table.
-partprobe /dev/sda
+partprobe ${DISK}
 
 echo ">>> Formatting partitions..."
 mkfs.fat -F32 ${DISK}1
@@ -37,7 +37,7 @@ mkswap -f ${DISK}3
 swapon ${DISK}3
 
 echo ">>> Mounting partitions..."
-mount ${DISK} /dev/sda2 /mnt
+mount ${DISK}2 /mnt
 mkdir -p /mnt/boot/efi && mount ${DISK}1 /mnt/boot/efi
 mkdir -p /mnt/home && mount ${DISK}4 /mnt/home
 
