@@ -1,5 +1,9 @@
 # Configuration variables for the Arch Linux Bootstrap installer.
 
+# Target disk for installation (e.g. /dev/sda)
+# You can view available disks with the 'lsblk' command.
+DISK=""
+
 # The desired hostname for the installed system.
 HOSTNAME=""
 

@@ -15,31 +15,31 @@ fi
 swapoff -a
 
 # Wipe existing partitions
-sgdisk --zap-all /dev/sda
-wipefs --all /dev/sda
+sgdisk --zap-all ${DISK}
+wipefs --all ${DISK}
 
 echo ">>> Creating partitions..."
-sgdisk /dev/sda --new=1:0:+${EFI_SIZE} --typecode=1:ef00 --change-name=1:EF_System
-sgdisk /dev/sda --new=2:0:+${ROOT_SIZE} --typecode=2:8300 --change-name=2:Root_Filesystem
-sgdisk /dev/sda --new=3:0:+${SWAP_SIZE} --typecode=3:8200 --change-name=3:Swap_Space
-sgdisk /dev/sda --new=4:0: --typecode=4:8300 --change-name=4:Home_Directory
+sgdisk ${DISK} --new=1:0:+${EFI_SIZE} --typecode=1:ef00 --change-name=1:EF_System
+sgdisk ${DISK} --new=2:0:+${ROOT_SIZE} --typecode=2:8300 --change-name=2:Root_Filesystem
+sgdisk ${DISK} --new=3:0:+${SWAP_SIZE} --typecode=3:8200 --change-name=3:Swap_Space
+sgdisk ${DISK} --new=4:0: --typecode=4:8300 --change-name=4:Home_Directory
 
 # Synchronize kernel partition table
 partprobe /dev/sda
 
 echo ">>> Formatting partitions..."
-mkfs.fat -F32 /dev/sda1
-mkfs.ext4 -F /dev/sda2
-mkfs.ext4 -F /dev/sda4
+mkfs.fat -F32 ${DISK}1
+mkfs.ext4 -F ${DISK}2
+mkfs.ext4 -F ${DISK}4
 
 # Setup and enable swap
-mkswap -f /dev/sda3
-swapon /dev/sda3
+mkswap -f ${DISK}3
+swapon ${DISK}3
 
 echo ">>> Mounting partitions..."
-mount /dev/sda2 /mnt
-mkdir -p /mnt/boot/efi && mount /dev/sda1 /mnt/boot/efi
-mkdir -p /mnt/home && mount /dev/sda4 /mnt/home
+mount ${DISK} /dev/sda2 /mnt
+mkdir -p /mnt/boot/efi && mount ${DISK}1 /mnt/boot/efi
+mkdir -p /mnt/home && mount ${DISK}4 /mnt/home
 
 echo ">>> Partitions..."
-lsblk -o NAME,FSTYPE,MOUNTPOINT,SIZE -n /dev/sda
+lsblk -o NAME,FSTYPE,MOUNTPOINT,SIZE -n ${DISK}
