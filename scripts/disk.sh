@@ -6,15 +6,15 @@ source "${PROJECT_DIR}/config.sh"
 echo "DISK"
 
 echo ">>>Cleaning up existing partitions..."
-# Check if /mnt is already mounted and unmount if necessary
+# Check if /mnt is already mounted and unmount if necessary.
 if mount | grep -q "/mnt"; then
   umount -R /mnt
 fi
 
-# Disable any active swap space
+# Disable any active swap space.
 swapoff -a
 
-# Wipe existing partitions
+# Wipe existing partitions.
 sgdisk --zap-all ${DISK}
 wipefs --all ${DISK}
 
@@ -24,7 +24,7 @@ sgdisk ${DISK} --new=2:0:+${ROOT_SIZE} --typecode=2:8300 --change-name=2:Root_Fi
 sgdisk ${DISK} --new=3:0:+${SWAP_SIZE} --typecode=3:8200 --change-name=3:Swap_Space
 sgdisk ${DISK} --new=4:0: --typecode=4:8300 --change-name=4:Home_Directory
 
-# Synchronize kernel partition table
+# Synchronize kernel partition table.
 partprobe /dev/sda
 
 echo ">>> Formatting partitions..."
@@ -32,7 +32,7 @@ mkfs.fat -F32 ${DISK}1
 mkfs.ext4 -F ${DISK}2
 mkfs.ext4 -F ${DISK}4
 
-# Setup and enable swap
+# Setup and enable swap.
 mkswap -f ${DISK}3
 swapon ${DISK}3
 

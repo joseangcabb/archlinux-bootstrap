@@ -17,8 +17,10 @@ echo ">>> Creating temporary installation file..."
   echo "#!/bin/bash"
   set -e
 
+  # Copy config variables.
   cat "${PROJECT_DIR}/config.sh"
 
+  # Join chroot/ files.
   for module in "${MODULE_FILES[@]}"; do
     cat "${SCRIPTS}/chroot/${module}"
   done
