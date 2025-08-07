@@ -18,13 +18,13 @@ station <interface> connect <network-name>
 exit
 ```
 
-### Check the connection
+### Check the Connection
 
 ``` sh
 ping -c 3 www.google.com
 ```
 
-## Get the installer
+## Get the Installer
 
 ``` sh
 pacman -Sy
@@ -35,7 +35,7 @@ git clone https://github.com/joseangcabb/archlinux-bootstrap.git
 cd archlinux-bootstrap
 ```
 
-## Setting up (`config.sh`)
+## Setting Up (`config.sh`)
 
 Edit the `config.sh` file to customize the installation.
 
@@ -55,7 +55,7 @@ ROOT_SIZE="50G"
 USER_NAME="angel"
 ```
 
-## Run installer
+## Run Installer
 
 ``` sh
 chmod +x installer.sh
