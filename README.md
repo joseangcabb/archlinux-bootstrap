@@ -46,6 +46,7 @@ vim config.sh
 Some supported variables include:
 
 ``` sh
+DISK="/dev/sda"
 HOSTNAME="myarch"
 TIMEZONE="America/Lima"
 LANG="en_US.UTF-8"
